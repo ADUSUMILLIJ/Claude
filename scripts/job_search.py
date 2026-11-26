@@ -62,7 +62,7 @@ FIT = re.compile(r"analyst|planner|planning|buyer|purchasing agent|procurement|s
 BAD = re.compile(r"clerk|warehouse (associate|worker|agent|lead|team|selector|operator|i\b|utility|material)|"
                  r"driver|forklift|handler|picker|selector|operator|cdl|dock|receiving|shipping (associate|&)|"
                  r"technician|\btech\b|trainer|supervisor|manager|director|\blead\b|senior|\bsr\.?\b|\bhead\b|"
-                 r"\bvp\b|principal|instructor|talent acquisition|recruiter|conference|counter sales|cycle counter|"
+                 r"\bvp\b|vice president|chief|officer|principal|instructor|talent acquisition|recruiter|conference|counter sales|cycle counter|"
                  r"stock associate|packing|courier|delivery|team member|helper|loader|sales|merchandise|"
                  r"account (manager|executive)|business development|broker|google ads|security|event|"
                  r"financial planning|paraplanner|retirement|wealth|intern\b|internship|part[- ]time|"
