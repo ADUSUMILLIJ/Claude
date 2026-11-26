@@ -1,1 +1,4 @@
 python-jobspy>=1.1.80
+openpyxl
+requests
+pandas

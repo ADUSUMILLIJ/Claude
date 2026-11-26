@@ -1,12 +1,15 @@
-# Job postings fetcher (JobSpy + Claude Code)
+# Job search (JobSpy + Claude Code)
 
-- `/jobs <title> in <location> ...` — Claude Code slash command (`.claude/commands/jobs.md`)
-- `scripts/fetch_jobs.py` — standalone CLI; results saved to `jobs/*.csv` and `.json`
+- **`/jobs`** — fresh, resume-matched supply-chain jobs from Indeed, Greenhouse, Lever, Workday and Ashby.
+  Posted today, US, full-time/contract, ≤3 yrs experience, OPT/STEM-safe, direct ATS links, and it
+  **never repeats** a job already shown (`data/seen_jobs.csv`).
+- `scripts/job_search.py` — the pipeline behind `/jobs` (settings in `config/profile.json`,
+  company boards in `data/ats_slugs.txt`). Output: `jobs/fresh_jobs_<timestamp>.xlsx/.csv`.
+- `scripts/fetch_jobs.py` — simple generic JobSpy search for any title/location.
 
 ```bash
 pip install -r requirements.txt
-python3 scripts/fetch_jobs.py -s "data analyst" -l "Boston, MA" --sites indeed linkedin -n 30 --hours 48
+python3 scripts/job_search.py                       # default search
+python3 scripts/job_search.py --terms "buyer" "demand planner"
+python3 scripts/job_search.py --include-seen        # show previously given jobs too
 ```
-
-Flags: `--remote`, `--job-type fulltime|parttime|internship|contract`, `--country`, `--description`, `--outdir`.
-ZipRecruiter/Glassdoor may return 403 from cloud IPs; they usually work from a home network.

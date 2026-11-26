@@ -1,0 +1,27 @@
+{
+  "_note": "Search preferences and resume-derived skills used by scripts/job_search.py. Edit freely.",
+  "country": "USA",
+  "location": "United States",
+  "hours": 24,
+  "today_only": true,
+  "timezone": "America/New_York",
+  "job_types": ["fulltime", "contract"],
+  "max_experience_years": 3,
+  "sites": ["Greenhouse", "Lever", "Workday", "Ashby", "Indeed"],
+  "opt_stem": true,
+  "min_stem_evidence": 2,
+  "indeed_search_terms": [
+    "supply chain analyst", "supply chain", "demand planner", "demand planning", "supply planner",
+    "supply planning", "inventory analyst", "inventory control", "procurement", "purchasing",
+    "buyer", "planner", "production planner", "materials planner", "sourcing", "S&OP",
+    "logistics analyst", "logistics coordinator", "operations analyst", "import export",
+    "supplier quality", "category analyst"
+  ],
+  "resume_skills": [
+    "sap", "s/4", "sql", "python", "power bi", "tableau", "excel", "erp", "mrp", "s&op",
+    "forecast", "inventory", "safety stock", "replenish", "demand", "supply plan", "procure",
+    "purchas", "supplier", "vendor", "kpi", "otif", "fill rate", "abc", "eoq", "lean",
+    "six sigma", "root cause", "continuous improvement", "logistics", "fulfil", "wms", "tms",
+    "capacity", "sku", "dashboard", "analytics", "data"
+  ]
+}
