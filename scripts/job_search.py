@@ -329,6 +329,9 @@ def main() -> int:
     ap.add_argument("--include-seen", action="store_true", help="Also show jobs given in earlier runs")
     ap.add_argument("--no-today-only", action="store_true", help="Keep anything within --hours, not just today")
     ap.add_argument("--no-stem", action="store_true", help="Skip the STEM-evidence filter")
+    ap.add_argument("--no-opt", action="store_true",
+                    help="Skip OPT/STEM filters (citizenship/ITAR/sponsorship wording and STEM evidence); "
+                         "such wording is still shown in the 'Restriction' column")
     ap.add_argument("--no-boards", action="store_true", help="Skip direct Greenhouse/Lever/Ashby board scan")
     a = ap.parse_args()
     prof = json.loads(PROFILE.read_text())
@@ -357,11 +360,11 @@ def main() -> int:
     df = df[~df.desc.str.contains(r"\brepost", case=False)]
     df["min_years"] = df.desc.map(min_exp)
     df = df[df.min_years.isna() | (df.min_years <= prof["max_experience_years"])]
-    if prof.get("opt_stem", True):
-        df["restricts"] = df.desc.map(restriction)
+    df["restricts"] = df.desc.map(restriction)
+    if prof.get("opt_stem", True) and not a.no_opt:
         df = df[df.restricts.isna()]
     df["stem_hits"] = [sorted({m.lower() for m in STEM.findall(t + " " + d)}) for t, d in zip(df.title, df.desc)]
-    if prof.get("opt_stem", True) and not a.no_stem:
+    if prof.get("opt_stem", True) and not (a.no_stem or a.no_opt):
         df = df[df.stem_hits.map(len) >= prof.get("min_stem_evidence", 2)]
     df["key"] = [norm_key(c, t, l) for c, t, l in zip(df.company, df.title, df.location)]
     df = df.sort_values("ats", key=lambda s: s.eq("Indeed")).drop_duplicates("key")
@@ -395,16 +398,17 @@ def main() -> int:
                              "ats": "Site", "salary": "Salary", "orig_date": "Posted"})
     out["Min Exp (yrs)"] = out.min_years.map(lambda x: "Not stated" if pd.isna(x) else int(x))
     out["STEM evidence"] = out.stem_hits.map(lambda x: ", ".join(x[:8]))
+    out["Restriction"] = out.restricts.fillna("")
     out["Location"] = out.Location.str.replace(", USA", "")
     out = out.sort_values("Match", ascending=False)[["Fit", "Match", "Title", "Company", "Location", "Job Type", "Site",
-                                                     "Min Exp (yrs)", "E-Verify", "STEM evidence", "Salary", "Posted",
+                                                     "Min Exp (yrs)", "E-Verify", "Restriction", "STEM evidence", "Salary", "Posted",
                                                      "Direct URL"]]
     OUTDIR.mkdir(exist_ok=True)
     stamp = dt.datetime.now(tz).strftime("%Y-%m-%d_%H%M")
     path = OUTDIR / f"fresh_jobs_{stamp}"
     out.to_csv(f"{path}.csv", index=False)
     out.to_excel(f"{path}.xlsx", index=False)
-    if not a.include_seen and len(out):
+    if len(out):
         save_seen(out)
 
     print(f"\n{len(out)} NEW jobs  ->  {path}.xlsx")
