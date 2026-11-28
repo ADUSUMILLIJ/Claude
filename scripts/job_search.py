@@ -66,7 +66,7 @@ BAD = re.compile(r"clerk|warehouse (associate|worker|agent|lead|team|selector|op
                  r"stock associate|packing|courier|delivery|team member|helper|loader|sales|merchandise|"
                  r"account (manager|executive)|business development|broker|google ads|security|event|"
                  r"financial planning|paraplanner|retirement|wealth|intern\b|internship|part[- ]time|"
-                 r"night shift|administrator vi|used car|media buyer|real estate|team leader|car buyer", re.I)
+                 r"night shift|administrator vi|used car|media buyer|real estate|team leader|car buyer|paralegal|estate planning|legal", re.I)
 STEM = re.compile(r"\bsql\b|\bsap\b|\berp\b|oracle|power ?bi|tableau|data analy\w*|analytics|database|python|"
                   r"\bmrp\b|statistic\w*|dashboards?|excel (?:model\w*|macros?|vba)|advanced excel|pivot tables?|"
                   r"vlookup|\bvba\b|\bkpis?\b|information systems?|netsuite|dynamics 365|\bwms\b|\btms\b|forecast\w*", re.I)
